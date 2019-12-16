@@ -90,13 +90,15 @@ def generate_level(level):
     return new_player, x, y
 
 def load_level(filename):
+    file = filename
     filename = "data/" + filename
     # читаем уровень, убирая символы перевода строки
     try:
         with open(filename, 'r') as mapFile:
             level_map = [line.strip() for line in mapFile]
-    except pygame.error as message:
-        print('Не могу загрузить уровень:', filename)
+    except FileNotFoundError as message:
+        print('Не могу загрузить уровень:', file)
+        terminate()
         raise SystemExit(message)
     # и подсчитываем максимальную длину
     max_width = max(map(len, level_map))
